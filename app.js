@@ -3,6 +3,8 @@ const express = require("express");
 // express app
 const app = express();
 
+//require
+const PORT = process.env.PORT || 3500;
 //home page route
 app.get('/',(req,res)=>{
     res.sendFile('./views/index.html',{root:__dirname});
@@ -24,6 +26,6 @@ app.use((req,res)=>{
 })
 
 //listen app for request
-app.listen(3500,()=>{
+app.listen(PORT,()=>{
     console.log("Your App is running at 3500!");
 })
