@@ -3,26 +3,37 @@ const express = require("express");
 // express app
 const app = express();
 
+//register view engine
+app.set("view engine","ejs");
+
 //require
 const PORT = process.env.PORT || 3500;
+
+
 //home page route
 app.get('/',(req,res)=>{
-    res.sendFile('./views/index.html',{root:__dirname});
+    const blogs = [
+        {title:"New Schedule",snippet:"Lorem ipsum dolor sit amet consectetur adipisicing elit."},
+        {title:"How to do",snippet:'Lorem ipsum dolor sit amet consectetur adipisicing elit.'},
+        {title:"Work Early",snippet:'Lorem ipsum dolor sit amet consectetur adipisicing elit.'}
+    ]
+    res.render('index',{title:'Home',blogs})
 })
 
 //about page route
 app.get('/about',(req,res)=>{
-    res.sendFile('./views/about.html',{root:__dirname});
+   res.render('about',{title:"About"})
 })
 
-//redirect about page
-app.get('/about-me',(req,res)=>{
-    res.redirect('/about');
+//create blog route
+app.get('/blogs/create',(req,res)=>{
+    res.render('create',{title:'New Blog'});
 })
+
 
 //404 page
 app.use((req,res)=>{
-    res.status(404).sendFile('./views/404.html',{root:__dirname});
+    res.status(404).render('404',{title:'404'});
 })
 
 //listen app for request
