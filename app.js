@@ -1,5 +1,5 @@
 const express = require("express");
-
+const morgan = require('morgan');
 // express app
 const app = express();
 
@@ -9,6 +9,12 @@ app.set("view engine","ejs");
 //require
 const PORT = process.env.PORT || 3500;
 
+
+//middleware
+app.use(morgan('dev'))
+
+//static 
+app.use(express.static('public'))
 
 //home page route
 app.get('/',(req,res)=>{
