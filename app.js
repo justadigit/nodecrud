@@ -24,6 +24,7 @@ const PORT = process.env.PORT || 3500;
 
 //middleware
 app.use(morgan('dev'))
+app.use(express.urlencoded({extended:true}))
 
 //static 
 app.use(express.static('public'))
@@ -38,7 +39,8 @@ app.get('/about',(req,res)=>{
    res.render('about',{title:"About"})
 })
 
-//blogs
+//for blogs
+//all blogs route
 app.get('/blogs',(req,res)=>{
     Blog.find().sort({createdAt:-1})
     .then(data=>{
@@ -56,25 +58,51 @@ app.get('/blogs/create',(req,res)=>{
     res.render('create',{title:'New Blog'});
 })
 
-
-//add new blog
-app.get('/add-blog',(req,res)=>{
-    const blog =new Blog({
-        title:"my new blog",
-        snippet:"note more for my new blog",
-        body:"more and more for my new blog"
-    });
-    blog.save()
-    .then(data=>res.send(data))
-    .catch(err=>res.send(err));
+//post route
+app.post('/blogs',(req,res)=>{
+   const blog = new Blog(req.body);
+   blog.save()
+   .then(result=>{
+       res.redirect('/blogs')
+   }).catch(err=>console.log(err));
 })
 
-//reterive all blogs
-app.get('/all-blogs',(req,res)=>{
-    Blog.find()
-    .then(data=>res.send(data))
-    .catch(err=>res.send(err))
+app.get('/blogs/:id',(req,res)=>{
+    const id = req.params.id;
+    Blog.findById(id)
+    .then(result=>{
+        res.render('details',{title:"Blog Details",blog:result})
+    })
 })
+app.delete('/blogs/:id',(req,res)=>{
+    const id = req.params.id;
+    Blog.findByIdAndDelete(id)
+    .then(result=>{
+        res.json({redirect:'/blogs'})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+// //add new blog
+// app.get('/add-blog',(req,res)=>{
+//     const blog =new Blog({
+//         title:"my new blog",
+//         snippet:"note more for my new blog",
+//         body:"more and more for my new blog"
+//     });
+//     blog.save()
+//     .then(data=>res.send(data))
+//     .catch(err=>res.send(err));
+// })
+
+// //reterive all blogs
+// app.get('/all-blogs',(req,res)=>{
+//     Blog.find()
+//     .then(data=>res.send(data))
+//     .catch(err=>res.send(err))
+// })
 
 //404 page
 app.use((req,res)=>{
