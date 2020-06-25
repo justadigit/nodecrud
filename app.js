@@ -84,6 +84,22 @@ app.delete('/blogs/:id',(req,res)=>{
         console.log(err)
     })
 })
+app.post('/blogs/update/:id',(req,res)=>{
+    const id = req.params.id;
+    const {title,snippet,body} = req.body;
+    Blog.findByIdAndUpdate(id,{title:title,snippet:snippet,body:body},
+        function (err, docs) { 
+            if (err){ 
+                console.log(err) 
+            } 
+            else{ 
+                console.log("Updated Blog : ", docs); 
+                res.redirect('/blogs');
+            } 
+        });
+});
+
+
 
 // //add new blog
 // app.get('/add-blog',(req,res)=>{

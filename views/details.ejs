@@ -9,12 +9,42 @@
     <div class="content">
       <p><%= blog.body %></p>
     </div>
-    <a class="delete" data-doc="<%= blog._id %>">delete</a>
+    <i class="fas fa-edit update" data-toggle="modal" data-target="#updateModal" ></i>
+    <a class="delete" data-doc="<%= blog._id %>"><i class="fas fa-trash-alt"></i></a>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Form</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="create-blog content">
+                <form action="/blogs/update/<%= blog._id %>" method="POST">
+                    <label for="title">Blogs Title</label>
+                    <input type="hidden" id="id" name="id" value="<%= blog._id %> ">
+                    <input type="text" id="title" name="title" value="<%= blog.title %> " >
+                    <label for="snippet">Blogs Snippet</label>
+                    <input type="text" id="snippet" name="snippet" value="<%= blog.snippet %> ">
+                    <label for="body">Blog Body:</label>
+                    <textarea name="body" id="body" cols="30" rows="10" name="body"><%= blog.body %> </textarea>
+                    <button type="submit">Edit</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <%- include("./partials/footer.ejs") %>
 
 <script>
+    //delete
     let deleteblog = document.querySelector('a.delete');
     deleteblog.addEventListener('click',(e)=>{
         const endpoint = `/blogs/${deleteblog.dataset.doc}`;
@@ -26,6 +56,23 @@
         .then(data=>window.location.href=data.redirect)
         .catch(err=>console.log(err))
     })
+    // //update
+    // document.querySelector('form').addEventListener('submit',function(e){
+    //     const endpoint = `/blogs/${e.target.id.value}`;
+    //     e.preventDefault();
+    //     let data = new FormData(this);
+    //     console.log(endpoint)
+    //     console.log(this);
+        
+    //     fetch(endpoint,{
+    //         type:'post',
+    //         method:'PUT',
+    //         data: data
+    //     })
+    //     .then(()=>{})
+    //     .catch(err=>console.log(err))
+        
+    // })
 </script>
 </body>
 </html>
