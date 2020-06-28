@@ -1,16 +1,16 @@
 <html lang="en">
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 
 <body>
-  <%- include("./partials/nav.ejs") %>
+  <%- include("../partials/nav.ejs") %>
 
   <div class="details content">
     <h2><%= blog.title %></h2>
     <div class="content">
       <p><%= blog.body %></p>
     </div>
-    <i class="fas fa-edit update" data-toggle="modal" data-target="#updateModal" ></i>
-    <a class="delete" data-doc="<%= blog._id %>"><i class="fas fa-trash-alt"></i></a>
+    <i class="fas fa-edit update text-primary" data-toggle="modal" data-target="#updateModal" ></i>
+    <a class="delete text-danger" data-doc="<%= blog._id %>"><i class="fas fa-trash-alt"></i></a>
   </div>
 
   <!-- Modal -->
@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <%- include("./partials/footer.ejs") %>
+  <%- include("../partials/footer.ejs") %>
 
 <script>
     //delete
