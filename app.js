@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes')
 //connect to DB
-const DBURI = "mongodb://naywin:naywin23@cluster0-shard-00-00-urly7.mongodb.net:27017,cluster0-shard-00-01-urly7.mongodb.net:27017,cluster0-shard-00-02-urly7.mongodb.net:27017/nodecrash?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
+const DBURI = "mongodb://naywin:naywin2323@cluster0-shard-00-00-urly7.mongodb.net:27017,cluster0-shard-00-01-urly7.mongodb.net:27017,cluster0-shard-00-02-urly7.mongodb.net:27017/nodecrash?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
 mongoose.connect(DBURI,{ useNewUrlParser: true,useUnifiedTopology: true })
 .then(data=>console.log('success to connect'))
 .catch(err=>console.log(err));
